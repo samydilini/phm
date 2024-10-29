@@ -1,0 +1,11 @@
+# Use the OpenJDK 22 image as the base image
+FROM openjdk:22
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the built .jar file from the Gradle build
+COPY build/libs/*.jar app.jar
+
+# Specify the command to run the application
+CMD ["java", "-jar", "app.jar"]
