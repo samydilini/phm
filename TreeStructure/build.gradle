@@ -9,17 +9,11 @@ version = '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
 }
+
 application {
     mainClass = 'org.phm.Main'
 }
 
-jar {
-    manifest {
-        attributes(
-                'Main-Class': 'org.phm.Main'
-        )
-    }
-}
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
@@ -27,4 +21,11 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'org.phm.Main'
+        )
+    }
 }
