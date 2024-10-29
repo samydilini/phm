@@ -9,6 +9,7 @@ version = '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
 }
+
 application {
     mainClass = 'org.phm.Main'
 }
