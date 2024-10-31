@@ -14,16 +14,43 @@ application {
     mainClass = 'org.phm.Main'
 }
 
+// Load properties from gradle.properties
+tasks.named('run') {
+    standardInput = System.in
+}
+
+
+run {
+    // Check if the property is defined
+    if (project.hasProperty('file.path')) {
+        systemProperty 'file.path', project.property('file.path')
+    } else {
+        println "Property 'file.path' is not defined in gradle.properties"
+    }
+}
+
 jar {
     manifest {
         attributes(
                 'Main-Class': 'org.phm.Main'
         )
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
     }
 }
+
+tasks.register('copyDependencies', Copy) {
+    from configurations.runtimeClasspath
+    into "$layout.buildDirectory/dependency-libs"
+}
+
+// Ensure dependencies are copied before building
+build.dependsOn copyDependencies
 dependencies {
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '5.14.2'
 }
 
 test {
