@@ -44,6 +44,7 @@ class ReadServiceTest {
         assertEquals("", outContent.toString().replace("\n", "")
                 .replace("\r", ""));
         verify(mockLogger).severe("Error while reading the file.");
+        verify(mockIoConfiguration).getReadFilePath();
     }
 
     @Test

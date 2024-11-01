@@ -1,9 +1,6 @@
 # PHM test
-This test is for File input output tests.
-It has two parts.
- 1. reading from a file with command line
- 2. saving to a file using swing.
-you can choose to do both from the command line
+This test is for File input test.
+You will be guided by the prompts in the command line.
 
 This project is set up to run with docker.
 Prerequisites 
@@ -17,7 +14,7 @@ Running
 - build docker file
 `docker build -t file_io .`
 
--start
+- start
 `docker run -it file_io`
 
 Handy commands

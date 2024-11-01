@@ -5,6 +5,8 @@ import org.phm.exception.FileIoException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.phm.configuration.IoConfiguration.FILE_PATH;
+import static org.phm.configuration.IoConfiguration.READ_FILE;
 
 
 class IoConfigurationTest {
@@ -12,17 +14,17 @@ class IoConfigurationTest {
 
 
     @Test
-    public void testReturningCorrectFilePathVariableProperlySet() throws FileIoException {
-        String filePathString = "filePathString";
+    public void shouldReturnCorrectReadFilePathWhenSystemVariableSet() throws FileIoException {
+        String filePathString = "filePathString/";
 
-        System.setProperty("file.path", filePathString);
+        System.setProperty(FILE_PATH, filePathString);
 
-        assertEquals(filePathString, ioConfiguration.getReadFilePath());
+        assertEquals(filePathString + READ_FILE, ioConfiguration.getReadFilePath());
     }
 
     @Test
     public void shouldThrowErrorWhenFilepathIsEmpty() {
-        System.setProperty("file.path", "");
+        System.setProperty(FILE_PATH, "");
 
         FileIoException thrown = assertThrows(FileIoException.class, () -> ioConfiguration.getReadFilePath());
 
