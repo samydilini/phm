@@ -70,8 +70,6 @@ class UserInputFrameTest {
 
             ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);
             verify(mockLogger).severe(argument.capture());
-            System.out.println("################");
-            System.out.println(argument.getValue());
             assertEquals("Error saving file: /invalid/path/to/file.txt (No such file or directory)", argument.getValue());
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
@@ -94,8 +92,6 @@ class UserInputFrameTest {
 
             ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);
             verify(mockLogger).info(argument.capture());
-            System.out.println("################");
-            System.out.println(argument.getValue());
             assertEquals("Content saved successfully!", argument.getValue());
             verify(frame).dispose();
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
