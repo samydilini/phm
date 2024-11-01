@@ -1,11 +1,16 @@
-# Use the OpenJDK 22 image as the base image
 FROM openjdk:22
-
-# Set the working directory in the container
 WORKDIR /app
 
-# Copy the built .jar file from the Gradle build
-COPY build/libs/*.jar app.jar
+# Copy source code and build it
+COPY . /app
+# RUN chmod +x ./gradlew
 
-# Specify the command to run the application
-CMD ["java", "-jar", "app.jar"]
+# Build and test the project
+RUN ./gradlew build test
+
+# Copy the main JAR and dependency JARs into Docker
+COPY build/libs/*.jar /app/libs/
+COPY build/dependency-libs/*.jar /app/libs/
+
+# Set the ENTRYPOINT to include all JAR files in /app/libs in the classpath
+ENTRYPOINT ["java", "-cp", "/app/libs/*", "org.phm.Main"]

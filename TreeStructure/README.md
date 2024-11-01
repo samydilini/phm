@@ -13,7 +13,7 @@ Running
 `docker build -t tree-structure .`
 
 -start
-`docker run --rm tree-structure`
+`docker run -it tree-structure`
 
 Handy commands
 -remove

@@ -14,7 +14,31 @@ application {
     mainClass = 'org.phm.Main'
 }
 
+tasks.named('run') {
+    standardInput = System.in
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'org.phm.Main'
+        )
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    }
+}
+
+//do no remove $buildDir
+tasks.register('copyDependencies', Copy) {
+    from configurations.runtimeClasspath
+    into "$buildDir/dependency-libs"
+}
+
+// Ensure dependencies are copied before building
+build.dependsOn copyDependencies
+
 dependencies {
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
@@ -22,6 +46,7 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
 jar {
     manifest {
         attributes(
