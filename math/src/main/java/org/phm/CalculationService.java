@@ -1,37 +1,65 @@
 package org.phm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CalculationService {
-    //return a record with number and string
+
     public Solution calculate(int[] numbers) {
-
-        String mathSign = null;
         StringBuilder expression = new StringBuilder();
-        boolean setMathSign = false;
-        int answer = 0;
-        for (int stage = 1; stage <= numbers.length; stage++) {
-            mathSign = mathSign == null || mathSign.equals("-") ? "+" : "-";
+        int result = 0;
 
-            for (int i = 0; i < numbers.length; i = i + stage) {
-                if (setMathSign) expression.append(mathSign);
-                setMathSign = true;
-                expression.append("(");
-                expression.append(numbers[i]);
-                int loopValue = numbers[i];
-                int nextValue = stage - 1;
-                if (nextValue > 0 && i + nextValue < numbers.length) {
-                    expression.append("X");
-                    expression.append(numbers[i + nextValue]);
-                    loopValue = loopValue * numbers[i + nextValue];
+        // Step 1: Add individual numbers to the result and expression without a leading '+' sign
+        for (int i = 0; i < numbers.length; i++) {
+            if (i > 0) {
+                expression.append("+");
+            }
+            result += numbers[i];
+            expression.append("(").append(numbers[i]).append(")");
+        }
+
+        // Step 2: Generate combinations of 2 or more numbers for the inclusion-exclusion calculation
+        for (int stage = 2; stage <= numbers.length; stage++) {
+            List<int[]> combinations = generateCombinations(numbers, stage);
+            for (int[] combination : combinations) {
+                int product = 1;
+                expression.append(stage % 2 == 0 ? "−" : "+").append("(");
+
+                // Calculate the product and build the expression string
+                for (int j = 0; j < combination.length; j++) {
+                    product *= combination[j];
+                    expression.append(combination[j]);
+                    if (j < combination.length - 1) {
+                        expression.append("X");
+                    }
                 }
                 expression.append(")");
-                answer = mathSign.equals("+") ? answer + loopValue : answer - loopValue;
 
-
+                // Alternate between subtracting and adding based on the size of the combination
+                result += (stage % 2 == 0 ? -1 : 1) * product;
             }
-
         }
-        System.out.println(expression);
-        return new Solution(expression.toString(), answer);
 
+        return new Solution(expression.toString(), result);
     }
+
+    // Generate all combinations of a given size from the input array
+    private List<int[]> generateCombinations(int[] numbers, int combinationSize) {
+        List<int[]> combinations = new ArrayList<>();
+        generateCombinationsHelper(numbers, new int[combinationSize], 0, 0, combinations);
+        return combinations;
+    }
+
+    private void generateCombinationsHelper(int[] numbers, int[] combination, int start, int depth, List<int[]> combinations) {
+        if (depth == combination.length) {
+            combinations.add(combination.clone());
+            return;
+        }
+
+        for (int i = start; i < numbers.length; i++) {
+            combination[depth] = numbers[i];
+            generateCombinationsHelper(numbers, combination, i + 1, depth + 1, combinations);
+        }
+    }
+
 }
