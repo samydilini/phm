@@ -1,4 +1,4 @@
 package org.phm;
 
-public record Solution(String equation, int answer) {
+public record Solution(String equation, long answer) {
 }

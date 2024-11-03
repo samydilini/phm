@@ -7,7 +7,7 @@ public class CalculationService {
 
     public Solution calculate(int[] numbers) {
         StringBuilder expression = new StringBuilder();
-        int result = 0;
+        long result = 0;
 
         // Step 1: Add individual numbers to the result and expression without a leading '+' sign
         for (int i = 0; i < numbers.length; i++) {
@@ -23,7 +23,7 @@ public class CalculationService {
             List<int[]> combinations = generateCombinations(numbers, stage);
             for (int[] combination : combinations) {
                 int product = 1;
-                expression.append(stage % 2 == 0 ? "−" : "+").append("(");
+                expression.append(stage % 2 == 0 ? "-" : "+").append("(");
 
                 // Calculate the product and build the expression string
                 for (int j = 0; j < combination.length; j++) {
@@ -61,5 +61,6 @@ public class CalculationService {
             generateCombinationsHelper(numbers, combination, i + 1, depth + 1, combinations);
         }
     }
+
 
 }
