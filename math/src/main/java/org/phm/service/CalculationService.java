@@ -1,4 +1,6 @@
-package org.phm;
+package org.phm.service;
+
+import org.phm.Solution;
 
 import java.util.ArrayList;
 import java.util.List;

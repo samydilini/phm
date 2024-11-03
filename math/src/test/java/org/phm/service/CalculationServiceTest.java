@@ -1,7 +1,8 @@
-package org.phm;
+package org.phm.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.phm.Solution;
 
 import static org.junit.jupiter.api.Assertions.*;
 

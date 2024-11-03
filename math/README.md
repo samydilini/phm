@@ -13,7 +13,7 @@ Running
 `docker build -t math .`
 
 -start
-`docker run --rm math`
+`docker run -it math`
 
 Handy commands
 -remove
